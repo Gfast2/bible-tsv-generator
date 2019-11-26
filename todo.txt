@@ -1,0 +1,15 @@
+--- backlog ---
+/ Genrate a new book with chinese title
+/ Genrate a new book with chinese title
+/ build GUI layer to let user select title's and version's parameter
+/ Polish readme
+
+--- todo ---
+/ Generate a new book with english title, chinese content (2h -> 3:40 -> Pretter, UTF-16 to UTF-8, module fetchbook.js)
+
+--- done ---
+/ 2019-11-25: Get all bible book's name
+/ 2019-11-25: Get all bible book names' short name
+/ 2019-11-26: Get all bible book names' chinese name
+/ 2019-11-26: Get all bible book names' chinese short name
+/ 2019-11-26: Get all bible book names' simplified name (1h -> 10:10 - 11:00)
