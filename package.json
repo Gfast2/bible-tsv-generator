@@ -1,0 +1,23 @@
+{
+  "name": "bible-tsv-generator",
+  "version": "0.0.1",
+  "description": "A generator script generators tsv format bibles text file.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bible",
+    "tsv",
+    "multi",
+    "language",
+    "cli",
+    "kjv"
+  ],
+  "author": "Su Gao",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "prettier": "^1.19.1"
+  }
+}
