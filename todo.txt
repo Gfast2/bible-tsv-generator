@@ -5,11 +5,12 @@
 / Polish readme
 
 --- todo ---
-/ Generate a new book with english title, chinese content (2h -> 3:40 -> Pretter, UTF-16 to UTF-8, module fetchbook.js)
 
 --- done ---
 / 2019-11-25: Get all bible book's name
 / 2019-11-25: Get all bible book names' short name
 / 2019-11-26: Get all bible book names' chinese name
 / 2019-11-26: Get all bible book names' chinese short name
-/ 2019-11-26: Get all bible book names' simplified name (1h -> 10:10 - 11:00)
+/ 2019-11-26: Get all bible book names' simplified name (1h)
+/ 2019-11-26: Generate a new book with english title, chinese content (2h, 3h 40m, 1h -> Pretter, UTF-16 to UTF-8, module fetchbook.js, goal not finished)
+/ 2019-11-26: Generate a new book with english title, chinese content (2h, 2h 15m -> fetchBooks.js fetch & parse whole book corectly, turn on "render White Space" in vs code, get the book correctly)
