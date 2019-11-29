@@ -24,8 +24,6 @@ module.exports = async () =>
       return Promise.resolve(simplifiedChineseObj);
     },
     rejected => {
-      console.log('rejected');
-      console.log(rejected);
       return Promise.reject(rejected);
     }
   );

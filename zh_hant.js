@@ -14,24 +14,27 @@ module.exports = async () =>
       const lines = resolved.data.split('\n');
       lines.map(e => {
         const ele = e.split(',');
-        // const id = ele[0];
+        const BookId = ele[0];
         const englishShort = ele[1];
         const englishFull = ele[2];
         const chineseShort = ele[3];
         const chineseFull = ele[4];
-        // const englishShorter = ele[5];
+        const englishShorter = ele[5];
         if (englishFull === undefined) {
           return; // filter empty line(s)
         }
-        toReturn[englishFull] = {
+        toReturn[BookId] = {
+          en_full: englishFull,
           en_short: englishShort,
+          en_shorter: englishShorter,
           zh_hant_full: chineseFull,
           zh_hant_short: chineseShort,
         };
       });
+      // console.log(toReturn);
       return Promise.resolve(toReturn);
     },
     rejected => {
-      return Promise.reject(rejected);
+      return Promise.reject('Failed while fetch traditional chinese Titles. \n' + rejected);
     }
   );
