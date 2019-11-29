@@ -3,7 +3,7 @@ const fs = require('fs');
 module.exports = text => {
   return new Promise((resolved, rejectd) => {
     fs.writeFile(
-      './cus.tsv',
+      './cns.tsv',
       text,
       {
         encoding: 'utf8',

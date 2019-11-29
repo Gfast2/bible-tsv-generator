@@ -1,5 +1,5 @@
 // Fetch the actual books and return content as json object
-const bookUrl = 'https://getbible.net/index.php?view=json&v=cus';
+const bookUrl = 'https://getbible.net/index.php?view=json&v=cns'; // 'cus' for traditional chinese!
 const axios = require('axios');
 
 // Parse each book's content back to humanreadable format.
