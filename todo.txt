@@ -1,8 +1,4 @@
 --- backlog ---
-/ Genrate a new book with chinese title
-/ Genrate a new book with chinese title
-/ build GUI layer to let user select title's and version's parameter
-/ Polish readme
 
 --- todo ---
 
@@ -14,3 +10,7 @@
 / 2019-11-26: Get all bible book names' simplified name (1h)
 / 2019-11-26: Generate a new book with english title, chinese content (2h, 3h 40m, 1h -> Pretter, UTF-16 to UTF-8, module fetchbook.js, goal not finished)
 / 2019-11-26: Generate a new book with english title, chinese content (2h, 2h 15m -> fetchBooks.js fetch & parse whole book corectly, turn on "render White Space" in vs code, get the book correctly)
+/ 2019-11-29: Genrate a new book with chinese title (1h 30m -> tweak zh_hant.js to index all books with book number, use this module to entitle each book while write down books)
+/ 2019-11-29: Bug shooting for fetch cns(simplified chinese version) but cus(traditional chinese) (5m)
+/ 2019-11-29: build GUI layer to indicate user how to process is going. (1h 5m, use chalk to design the GUI, make a quick gif video for it)
+/ 2019-11-29: Polish readme (1h -> make video, write texts)

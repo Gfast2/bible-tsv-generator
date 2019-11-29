@@ -8,7 +8,7 @@ module.exports = async () =>
   await axios.get(siteUrl).then(
     resolved => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
-        return Promise.rejecte('Request rejected when quering tradisional book titles');
+        return Promise.rejecte('Request resolved with abnormal http code ${resolved.status} while quering traditional chinese book titles');
       }
       const toReturn = {};
       const lines = resolved.data.split('\n');

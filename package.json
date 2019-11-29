@@ -1,9 +1,10 @@
 {
   "name": "bible-tsv-generator",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A generator script generators tsv format bibles text file.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -22,8 +23,19 @@
     "chinese-conv": "^1.0.1"
   },
   "devDependencies": {
+    "eslint": "^6.7.1",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-prettier": "^3.1.1",
     "prettier": "^1.19.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gfast2/bible-tsv-generator.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/Gfast2/bible-tsv-generator.git/blob/master/LICENSE"
+    }
+  ]
 }
