@@ -1,27 +1,21 @@
-const englishNamePairs = require('./getEnglishNamePairs');
+const zhHans = require('./zh_hans');
 const fetchBooks = require('./fetchBooks');
 const write2fs = require('./write2fs');
 
-const writeTsv = async (obj, englishNamePairs) => {
+const writeTsv = async (obj, _bookNamePairs) => {
   for await (const [bookId, objBody] of Object.entries(obj)) {
-    let englishFullName = '';
+    // let englishFullName = '';
     for await (const [key, value] of Object.entries(objBody)) {
       if (key === 'book_name') {
-        englishFullName = value; // Full Name of the book
+        // englishFullName = value; // Full Name of the book
       } else if (key === 'book') {
         for await (const [k, verses] of Object.entries(value)) {
           const chapterID = k;
           for await (const [verseID, verseContent] of Object.entries(verses)) {
-            let shortName = englishNamePairs[englishFullName];
-            if (shortName === undefined) {
-              // There were different name flavor for these two books
-              if (englishFullName === 'Song of Songs') {
-                shortName = 'SSol';
-              } else if (englishFullName === 'Acts') {
-                shortName = 'Acts';
-              }
-            }
-            const line = `${englishFullName}\t${shortName}\t\t${bookId}\t${chapterID}\t${verseID}\t${verseContent}\n`;
+            const nameObj = _bookNamePairs[bookId];
+            const zhFullName = nameObj['zh_hans_full'];
+            const zhShortName = nameObj['zh_hans_short'];
+            const line = `${zhFullName}\t${zhShortName}\t\t${bookId}\t${chapterID}\t${verseID}\t${verseContent}\n`;
             try {
               await write2fs(line);
             } catch (error) {
@@ -34,17 +28,18 @@ const writeTsv = async (obj, englishNamePairs) => {
   }
 };
 
-englishNamePairs().then(
+zhHans().then(
   resolved => {
     fetchBooks().then(
       resol => {
         // console.log(resol);
         // console.log(resol.version['62']);
         const wholeBible = resol.version;
-        const englishFullShortName = resolved;
+        const bookNamePairs = resolved;
+        console.log(bookNamePairs);
         // TODO: get short name from full name
         // TODO: write this actual book into a .tsv file
-        writeTsv(wholeBible, englishFullShortName).then(
+        writeTsv(wholeBible, bookNamePairs).then(
           () => {
             console.log('All done properly');
           },
