@@ -1,6 +1,6 @@
 # bible-tsv-generator
 <center>
-  <img src='./images/bible.gif' width='100%' />
+  <img src='./docs/images/bible.gif' width='100%' />
 </center>
 
 ## Intro
