@@ -4,7 +4,9 @@
   "description": "A generator script generators tsv format bibles text file.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "npm run build:live",
+    "build": "tsc -p .",
+    "build:live": "nodemon --watch './**/*.ts' --exec ts-node ./index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -23,10 +25,14 @@
     "chinese-conv": "^1.0.1"
   },
   "devDependencies": {
+    "@types/node": "^12.12.16",
     "eslint": "^6.7.1",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-prettier": "^3.1.1",
-    "prettier": "^1.19.1"
+    "nodemon": "^2.0.1",
+    "prettier": "^1.19.1",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.3"
   },
   "repository": {
     "type": "git",
