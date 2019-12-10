@@ -30,4 +30,4 @@ npm start
 
 ## License
 
-[MIT](./LICENSE.txt)
+[MIT](./LICENSE)

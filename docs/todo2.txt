@@ -1,0 +1,11 @@
+Sprint 2019-12-9~13
+--- backlog ---
+/ Abstract not related stuff into their own module from index.js
+/ Move all source stuff into "/src" and try to use typescript code-base style as Basard suggested
+/ Convert the code base into typescript
+/ Add another option to allow user download another version of chinese bible (和合本)
+/ Start considering how should write the test
+
+--- todo ---
+
+--- done ---
