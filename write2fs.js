@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-module.exports = text => {
+module.exports = (text, clear) => {
   return new Promise((resolved, rejectd) => {
     fs.writeFile(
       './cns.tsv',
@@ -8,7 +8,7 @@ module.exports = text => {
       {
         encoding: 'utf8',
         mode: 0o666,
-        flag: 'a',
+        flag: clear === undefined ? 'a' : 'w',
       },
       err => {
         if (err) {

@@ -14,7 +14,7 @@ const writeTsv = async (obj, _bookNamePairs) => {
         for await (const [k, verses] of Object.entries(value)) {
           const chapterID = k;
           for await (const [verseID, verseContent] of Object.entries(verses)) {
-            const line = `${zhFullName}\t${zhShortName}\t\t${bookId}\t${chapterID}\t${verseID}\t${verseContent}\n`;
+            const line = `${zhFullName}\t${zhShortName}\t${bookId}\t${chapterID}\t${verseID}\t${verseContent}\n`;
             try {
               await write2fs(line);
             } catch (error) {
@@ -65,11 +65,13 @@ zhHans().then(
   resolved => {
     console.log('Got all simplified chinese book titles.');
     fetchBooks().then(
-      resol => {
+      async resol => {
         console.log('Got all simplified chinese book contents.');
         const wholeBible = resol.version;
         const bookNamePairs = resolved;
-        writeTsv(wholeBible, bookNamePairs).then(
+        const clearExistContent = true;
+        await write2fs('', clearExistContent);
+        await writeTsv(wholeBible, bookNamePairs).then(
           () => {
             doneGraph();
             console.log(
