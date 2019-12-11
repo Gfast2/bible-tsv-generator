@@ -1,4 +1,4 @@
-import zhHans from './zhHans';
+import zhHans from './zh_hans';
 import fetchBooks from './fetchBooks';
 import write2fs from './write2fs';
 import chalk from 'chalk';

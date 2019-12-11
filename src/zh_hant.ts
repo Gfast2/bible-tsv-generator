@@ -2,17 +2,17 @@
 
 // Api explaination: https://bible.fhl.net/json/
 const siteUrl = 'https://bible.fhl.net/json/listall.html';
-const axios = require('axios');
+import axios from 'axios';
 
-module.exports = async () =>
+export default async () =>
   await axios.get(siteUrl).then(
     resolved => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
-        return Promise.rejecte('Request resolved with abnormal http code ${resolved.status} while quering traditional chinese book titles');
+        return Promise.reject('Request resolved with abnormal http code ${resolved.status} while quering traditional chinese book titles');
       }
-      const toReturn = {};
+      const toReturn:any = {};
       const lines = resolved.data.split('\n');
-      lines.map(e => {
+      lines.map((e:any) => {
         const ele = e.split(',');
         const BookId = ele[0];
         const englishShort = ele[1];

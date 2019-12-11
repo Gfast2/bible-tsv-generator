@@ -1,14 +1,14 @@
 // return object that return simplified chinese book titles
-const zh_hant = require('./zh_hant');
-const chineseConv = require('chinese-conv');
+import zh_hant from './zh_hant';
+import chineseConv from 'chinese-conv';
 
-module.exports = async () =>
+export default async () =>
   await zh_hant().then(
-    resolved => {
-      const simplifiedChineseObj = {};
-      Object.entries(resolved).forEach(([key, val]) => {
-        const newVal = {};
-        Object.entries(val).forEach(([cKey, cVal]) => {
+    (resolved:any) => {
+      const simplifiedChineseObj:any = {};
+      Object.entries<object>(resolved).forEach(([key, val]) => {
+        const newVal:any = {};
+        Object.entries<any>(val).forEach(([cKey, cVal]) => {
           if (cVal === undefined) {
             return; // protect from 'undefined' for translations function call
           } else if (cKey === 'zh_hant_full') {
@@ -23,7 +23,7 @@ module.exports = async () =>
       });
       return Promise.resolve(simplifiedChineseObj);
     },
-    rejected => {
+    (rejected:any) => {
       return Promise.reject(rejected);
     }
   );
