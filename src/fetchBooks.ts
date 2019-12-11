@@ -1,13 +1,13 @@
 // Fetch the actual books and return content as json object
 const bookUrl = 'https://getbible.net/index.php?view=json&v=cns'; // 'cus' for traditional chinese!
-const axios = require('axios');
+import axios from 'axios';
 
 // Parse each book's content back to humanreadable format.
-const decodeEachBook = book => {
-  const book2Return = {};
-  Object.entries(book).map(([key, value]) => {
-    const transChapter = {};
-    Object.entries(value).map(([k, v]) => {
+const decodeEachBook = (book:any) => {
+  const book2Return:any = {};
+  Object.entries<object[]>(book).map(([key, value]) => {
+    const transChapter:any = {};
+    Object.entries<object>(value).map(([k, v]) => {
       if (k === 'chapter') {
         Object.entries(v).map(([nam, sentenceObj]) => {
           transChapter[nam] = decodeURI(sentenceObj.verse).replace(/\r\n/, '');
@@ -20,9 +20,9 @@ const decodeEachBook = book => {
 };
 
 // Parse all books' content
-const decodeAllBooks = books => {
-  const newVersion = {};
-  Object.entries(books).map(([key, object]) => {
+const decodeAllBooks = (books:any) => {
+  const newVersion:any = {};
+  Object.entries<object[]>(books).map(([key, object]) => {
     newVersion[key] = {};
     Object.entries(object).map(([k, o]) => {
       newVersion[key][k] = k === 'book' ? decodeEachBook(o) : o;
@@ -31,15 +31,15 @@ const decodeAllBooks = books => {
   return newVersion;
 };
 
-module.exports = async () =>
+export default async () =>
   await axios.get(bookUrl).then(
-    resolved => {
+    (resolved:any) => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
         return Promise.reject('Failed to parse response books');
       }
       const raw = resolved.data;
       const tmp = raw.substring(1, raw.length - 2);
-      let rawBook = {};
+      let rawBook:any = {};
       try {
         rawBook = JSON.parse(tmp);
       } catch (error) {
@@ -53,7 +53,7 @@ module.exports = async () =>
       };
       return Promise.resolve(theBible);
     },
-    rejected => {
+    (rejected:any) => {
       return Promise.reject(rejected);
     }
   );

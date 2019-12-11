@@ -1,12 +1,7 @@
-const zhHans = require('./zh_hans');
-const fetchBooks = require('./fetchBooks');
-const write2fs = require('./write2fs');
-const chalk = require('chalk');
-
-interface Verse {
-  id: string;
-  content: string;
-}
+import zhHans from './zhHans';
+import fetchBooks from './fetchBooks';
+import write2fs from './write2fs';
+import chalk from 'chalk';
 
 const writeTsv = async (obj:any, _bookNamePairs:any) => {
   for await (const [bookId, objBody] of Object.entries<object>(obj)) {
