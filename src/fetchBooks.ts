@@ -31,7 +31,8 @@ const decodeAllBooks = (books:any) => {
   return newVersion;
 };
 
-export default async () =>
+// TODO: Here I define four different book name for different chinese bible versions
+export default async (bookVersion: BookVersion) =>
   await axios.get(bookUrl).then(
     (resolved:any) => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
