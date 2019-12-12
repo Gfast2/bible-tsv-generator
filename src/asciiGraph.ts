@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 
-export const bibleGraph = () =>
+export const bibleGraph = (): void =>
   console.log(
     chalk.yellowBright.bold(`
 
@@ -21,7 +21,7 @@ jgs  '---'
 `)
   );
 
-export const doneGraph = () =>
+export const doneGraph = (): void =>
   console.log(
     chalk.greenBright.bold(`
 
