@@ -5,7 +5,7 @@
  * @typeparam 'cus' Chinese Union Simplified
  * @typeparam 'cut';Chinese Union Traditional
  * */
-type BookVersion =
+export type BookVersion =
   | 'cns' // Chinese: NCV Simplified
   | 'cnt' // Chinese: NCV Traditional
   | 'cus' // Chinese: Union Simplified

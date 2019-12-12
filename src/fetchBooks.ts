@@ -1,6 +1,7 @@
 // Fetch the actual books and return content as json object
 const bookUrl = 'https://getbible.net/index.php?view=json&v=cns'; // 'cus' for traditional chinese!
 import axios from 'axios';
+import { BookVersion } from "../types/globals";
 
 // Parse each book's content back to humanreadable format.
 const decodeEachBook = (book:any) => {

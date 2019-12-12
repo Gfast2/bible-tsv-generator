@@ -3,6 +3,7 @@ import fetchBooks from './fetchBooks';
 import write2fs from './write2fs';
 import { bibleGraph, doneGraph } from './asciiGraph';
 import chalk from 'chalk';
+import { BookVersion } from '../types/globals';
 
 const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion:BookVersion) => {
   for await (const [bookId, objBody] of Object.entries<object>(obj)) {
