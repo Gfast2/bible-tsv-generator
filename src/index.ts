@@ -4,6 +4,8 @@ import write2fs from './write2fs';
 import { bibleGraph, doneGraph } from './asciiGraph';
 import chalk from 'chalk';
 import { BookVersion } from '../types/globals';
+import ora from 'ora';
+import inquirer from 'inquirer';
 
 const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion: BookVersion): Promise<string | undefined> => {
   for await (const [bookId, objBody] of Object.entries<object>(obj)) {
@@ -29,10 +31,86 @@ const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion: BookVersion
   }
 };
 
-bibleGraph();
+
 
 const bookVersion: BookVersion = 'cns';
 
+const helpGen = (): string => {
+  let w = '-------------------------------------------------------\n';
+  w += `${chalk.red('Description:')}\n`;
+  w += '  A small CLI software that generate tsv format bible \n';
+  w += `  for another sweet CLI software (${chalk.underline('https://github.com/Gfast2/kjv')}) \n`;
+  w += '  that help you search / read bible in the most efficient\n';
+  w += '  fashion. Read more in README of the repo.\n';
+  w += `${chalk.red('Version:')}\n`;
+  w += '  2.0.0\n';
+  w += '-------------------------------------------------------\n';
+  return w;
+};
+
+const byeGen = (): string => {
+  let w = '-------------------------------------------------------\n';
+  w += '                .---.             \n';
+  w += '                : .; :            \n';
+  w += `                :   .'.-..-. .--. \n`;
+  w += `                : .; :: : ; : ' '_.'\n`;
+  w += `                ` + ": ___.'`._. :`.__.'\n";
+  w += `                  .-. :      \n`;
+  w += `                ` + "       `._.'       \n";
+  w += '-------------------------------------------------------\n';
+  return w;
+};
+
+// TODO: Here I add logic acutally let the user select what they would like to download
+const cliMenu = (): void => {
+  const availChoices = [
+    { name: 'Chinese: NCV Simplified', value: 'cns' },
+    { name: 'Chinese: NCV Traditional', value: 'cnt' },
+    { name: 'Chinese: Union Simplified', value: 'cus' },
+    { name: 'Chinese: Union Traditional', value: 'cut' },
+    new inquirer.Separator(),
+    { name: 'Help', value: 'help' },
+    { name: 'Quit', value: 'quit' },
+  ];
+  type answersType = {
+    command: string;
+  };
+  inquirer
+    .prompt({
+      type: 'list',
+      name: 'command',
+      message: 'What would you like to do',
+      choices: availChoices,
+    })
+    .then(async (answers: answersType) => {
+      console.log(answers);
+      switch (answers.command) {
+        case 'help': {
+          console.log(chalk.yellowBright(helpGen()));
+          cliMenu();
+          break;
+        }
+        case 'quit': {
+          console.log(chalk.yellowBright(byeGen()));
+          process.exit(0);
+          break;
+        }
+        case '': {
+          break;
+        }
+        default:
+          break;
+      }
+    });
+};
+
+const main = (): void => {
+  bibleGraph();
+  cliMenu();
+};
+
+main();
+/*
 zhHans().then(
   (resolved: any) => {
     console.log('Got all simplified chinese book titles.');
@@ -69,6 +147,7 @@ zhHans().then(
     console.log(reason);
   }
 );
+ */
 
 // Format in .tsv file:
 // <Fullname>\t<Shortname>\t<Book ID>\t<Chapter ID>\t<verse ID>\t<verse content>\n
