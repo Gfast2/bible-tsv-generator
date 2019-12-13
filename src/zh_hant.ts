@@ -4,15 +4,15 @@
 const siteUrl = 'https://bible.fhl.net/json/listall.html';
 import axios from 'axios';
 
-export default async () =>
+export default async (): Promise<object | string> =>
   await axios.get(siteUrl).then(
     resolved => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
-        return Promise.reject('Request resolved with abnormal http code ${resolved.status} while quering traditional chinese book titles');
+        return Promise.reject(`Request resolved with abnormal http code ${resolved.status} while quering traditional chinese book titles`);
       }
-      const toReturn:any = {};
+      const toReturn: any = {};
       const lines = resolved.data.split('\n');
-      lines.map((e:any) => {
+      lines.map((e: any) => {
         const ele = e.split(',');
         const BookId = ele[0];
         const englishShort = ele[1];
@@ -24,11 +24,11 @@ export default async () =>
           return; // filter empty line(s)
         }
         toReturn[BookId] = {
-          en_full: englishFull,
-          en_short: englishShort,
-          en_shorter: englishShorter,
-          zh_hant_full: chineseFull,
-          zh_hant_short: chineseShort,
+          enFull: englishFull,
+          enShort: englishShort,
+          enShorter: englishShorter,
+          zhHantFull: chineseFull,
+          zhHantShort: chineseShort,
         };
       });
       // console.log(toReturn);

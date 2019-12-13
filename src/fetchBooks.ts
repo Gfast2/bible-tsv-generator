@@ -1,13 +1,13 @@
 // Fetch the actual books and return content as json object
 const bookUrl = 'https://getbible.net/index.php?view=json&v=cns'; // 'cus' for traditional chinese!
 import axios from 'axios';
-import { BookVersion } from "../types/globals";
+import { BookVersion } from '../types/globals';
 
 // Parse each book's content back to humanreadable format.
-const decodeEachBook = (book:any) => {
-  const book2Return:any = {};
+const decodeEachBook = (book: any): object => {
+  const book2Return: any = {};
   Object.entries<object[]>(book).map(([key, value]) => {
-    const transChapter:any = {};
+    const transChapter: any = {};
     Object.entries<object>(value).map(([k, v]) => {
       if (k === 'chapter') {
         Object.entries(v).map(([nam, sentenceObj]) => {
@@ -21,8 +21,8 @@ const decodeEachBook = (book:any) => {
 };
 
 // Parse all books' content
-const decodeAllBooks = (books:any) => {
-  const newVersion:any = {};
+const decodeAllBooks = (books: any): object => {
+  const newVersion: any = {};
   Object.entries<object[]>(books).map(([key, object]) => {
     newVersion[key] = {};
     Object.entries(object).map(([k, o]) => {
@@ -35,13 +35,13 @@ const decodeAllBooks = (books:any) => {
 // TODO: Here I define four different book name for different chinese bible versions
 export default async (bookVersion: BookVersion) =>
   await axios.get(bookUrl).then(
-    (resolved:any) => {
+    (resolved: any) => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
         return Promise.reject('Failed to parse response books');
       }
       const raw = resolved.data;
       const tmp = raw.substring(1, raw.length - 2);
-      let rawBook:any = {};
+      let rawBook: any = {};
       try {
         rawBook = JSON.parse(tmp);
       } catch (error) {
@@ -55,7 +55,7 @@ export default async (bookVersion: BookVersion) =>
       };
       return Promise.resolve(theBible);
     },
-    (rejected:any) => {
+    (rejected: any) => {
       return Promise.reject(rejected);
     }
   );

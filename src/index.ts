@@ -5,11 +5,11 @@ import { bibleGraph, doneGraph } from './asciiGraph';
 import chalk from 'chalk';
 import { BookVersion } from '../types/globals';
 
-const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion:BookVersion) => {
+const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion: BookVersion): Promise<string | undefined> => {
   for await (const [bookId, objBody] of Object.entries<object>(obj)) {
     const nameObj = _bookNamePairs[bookId];
-    const zhFullName = nameObj['zh_hans_full'];
-    const zhShortName = nameObj['zh_hans_short'];
+    const zhFullName = nameObj['zhHansFull'];
+    const zhShortName = nameObj['zhHansShort'];
     console.log(chalk.bold.dim('Writing down book ') + chalk.inverse.whiteBright(zhFullName));
     for await (const [key, value] of Object.entries(objBody)) {
       if (key === 'book') {
@@ -18,7 +18,7 @@ const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion:BookVersion)
           for await (const [verseID, verseContent] of Object.entries(verses)) {
             const line = `${zhFullName}\t${zhShortName}\t${bookId}\t${chapterID}\t${verseID}\t${verseContent}\n`;
             try {
-              await write2fs(line, _bookVersion);
+              return await write2fs(line, _bookVersion);
             } catch (error) {
               return error;
             }
@@ -34,10 +34,10 @@ bibleGraph();
 const bookVersion: BookVersion = 'cns';
 
 zhHans().then(
-  (resolved:any) => {
+  (resolved: any) => {
     console.log('Got all simplified chinese book titles.');
     fetchBooks(bookVersion).then(
-      async (resol:any) => {
+      async (resol: any) => {
         console.log('Got all simplified chinese book contents.');
         const wholeBible = resol.version;
         const bookNamePairs = resolved;
@@ -58,13 +58,13 @@ zhHans().then(
           }
         );
       },
-      (rejec:any) => {
+      (rejec: any) => {
         console.log(chalk.bold.underline.redBright('Failed to fetch & parse whole bible with following reason:'));
         console.log(rejec);
       }
     );
   },
-  (reason:any) => {
+  (reason: any) => {
     console.log(chalk.bold.underline.redBright('Got rejected while fetching book titles.'));
     console.log(reason);
   }

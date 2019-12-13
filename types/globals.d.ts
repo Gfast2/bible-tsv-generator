@@ -9,4 +9,4 @@ export type BookVersion =
   | 'cns' // Chinese: NCV Simplified
   | 'cnt' // Chinese: NCV Traditional
   | 'cus' // Chinese: Union Simplified
-  | 'cut';// Chinese: Union Traditional
+  | 'cut'; // Chinese: Union Traditional
