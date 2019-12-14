@@ -1,11 +1,12 @@
 // return object that contains traditional chinese book titles
 
 // Api explaination: https://bible.fhl.net/json/
+// const siteUrl = 'http://192.168.0.92/listall.html'; // Simulator purpose
 const siteUrl = 'https://bible.fhl.net/json/listall.html';
 import axios from 'axios';
 
-export default async (): Promise<object | string> =>
-  await axios.get(siteUrl).then(
+export default (): Promise<object | string> =>
+  axios.get(siteUrl).then(
     resolved => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
         return Promise.reject(`Request resolved with abnormal http code ${resolved.status} while quering traditional chinese book titles`);

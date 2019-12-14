@@ -2,8 +2,8 @@
 import zhHant from './zh_hant';
 import chineseConv from 'chinese-conv';
 
-export default async (): Promise<object> =>
-  await zhHant().then(
+export default (): Promise<object> =>
+  zhHant().then(
     (resolved: any) => {
       const simplifiedChineseObj: any = {};
       Object.entries<object>(resolved).forEach(([key, val]) => {
