@@ -3,7 +3,7 @@ import write2fs from './write2fs';
 import zhHans from './zh_hans';
 import fetchBooks from './fetchBooks';
 import { BookVersion } from '../types/globals';
-import { doneGraph } from './asciiGraph';
+// import { doneGraph } from './asciiGraph';
 
 const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion: BookVersion): Promise<string | undefined> => {
   for await (const [bookId, objBody] of Object.entries<object>(obj)) {
@@ -17,9 +17,8 @@ const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion: BookVersion
           const chapterID = k;
           for await (const [verseID, verseContent] of Object.entries(verses)) {
             const line = `${zhFullName}\t${zhShortName}\t${bookId}\t${chapterID}\t${verseID}\t${verseContent}\n`;
-            console.log(line);
             try {
-              return await write2fs(line, _bookVersion);
+              await write2fs(line, _bookVersion);
             } catch (error) {
               return error;
             }
@@ -30,8 +29,7 @@ const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion: BookVersion
   }
 };
 
-// export const tmp = (bookVersion: BookVersion) =>
-export default (bookVersion: BookVersion) =>
+export default (bookVersion: BookVersion): Promise<string | undefined> =>
   zhHans()
     .then((res: any) => {
       console.log('Got all simplified chinese book titles.');
@@ -48,7 +46,8 @@ export default (bookVersion: BookVersion) =>
       async (_bookNamePairs: any): Promise<string | undefined> => {
         let wholeBible: any = {};
         try {
-          wholeBible = await fetchBooks(bookVersion);
+          const bookObj = await fetchBooks(bookVersion);
+          wholeBible = bookObj.version;
         } catch (e) {
           console.log('Failed to fetch book content.');
           return Promise.reject('fail');
@@ -62,8 +61,6 @@ export default (bookVersion: BookVersion) =>
           return Promise.reject('fail');
         }
         try {
-          // console.log(JSON.stringify(_bookNamePairs));
-          // console.log(bookVersion);
           await writeTsv(wholeBible, _bookNamePairs, bookVersion);
           return Promise.reject('succeed');
         } catch (e) {

@@ -1,5 +1,6 @@
 // Fetch the actual books and return content as json object
 const bookUrl = 'https://getbible.net/index.php?view=json&v=cns'; // 'cus' for traditional chinese!
+// const bookUrl = 'http://192.168.0.92/cns.html'; // for simulation purpose
 import axios from 'axios';
 import { BookVersion } from '../types/globals';
 
