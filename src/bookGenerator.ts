@@ -3,7 +3,6 @@ import write2fs from './write2fs';
 import zhHans from './zh_hans';
 import fetchBooks from './fetchBooks';
 import { BookVersion } from '../types/globals';
-// import { doneGraph } from './asciiGraph';
 
 const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion: BookVersion): Promise<string | undefined> => {
   for await (const [bookId, objBody] of Object.entries<object>(obj)) {
@@ -62,7 +61,7 @@ export default (bookVersion: BookVersion): Promise<string | undefined> =>
         }
         try {
           await writeTsv(wholeBible, _bookNamePairs, bookVersion);
-          return Promise.reject('succeed');
+          return Promise.resolve('succeed');
         } catch (e) {
           console.log('Failed to write content into target file.');
           return Promise.reject('fail');

@@ -1,5 +1,6 @@
 // Fetch the actual books and return content as json object
-const bookUrl = 'https://getbible.net/index.php?view=json&v=cns'; // 'cus' for traditional chinese!
+// const bookUrl = 'https://getbible.net/index.php?view=json&v=cns'; // 'cus' for traditional chinese!
+const bookUrl = 'https://getbible.net/index.php?view=json&v='; // 'cus' for traditional chinese!
 // const bookUrl = 'http://192.168.0.92/cns.html'; // for simulation purpose
 import axios from 'axios';
 import { BookVersion } from '../types/globals';
@@ -33,9 +34,8 @@ const decodeAllBooks = (books: any): object => {
   return newVersion;
 };
 
-// TODO: Here I define four different book name for different chinese bible versions
 export default async (bookVersion: BookVersion) =>
-  await axios.get(bookUrl).then(
+  await axios.get(encodeURI(`${bookUrl}${bookVersion}`)).then(
     (resolved: any) => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
         return Promise.reject('Failed to parse response books');
