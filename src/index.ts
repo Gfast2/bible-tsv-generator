@@ -71,7 +71,8 @@ const main = (): void => {
 // main();
 
 // Mock main function for file download parsing
-const tmpMain = async () => {
+// TODO: Figure out whick type(s) are allowed to be returned here. (ts1055)
+const tmpMain = async (): void => {
   try {
     await bookGenerator('cnt'); // resolve Promise with book name as payload
     doneGraph();

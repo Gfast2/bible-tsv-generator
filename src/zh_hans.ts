@@ -2,9 +2,11 @@
 import zhHant from './zh_hant';
 import chineseConv from 'chinese-conv';
 
-export default (): Promise<object> =>
+// TODO: Figure out how to define in zh_hant.ts define return type to be
+// for resolve object, for reject string
+export default (): Promise<object | string> =>
   zhHant().then(
-    (resolved: any) => {
+    (resolved: object): any => {
       const simplifiedChineseObj: any = {};
       Object.entries<object>(resolved).forEach(([key, val]) => {
         const newVal: any = {};
@@ -21,9 +23,11 @@ export default (): Promise<object> =>
         });
         simplifiedChineseObj[key] = newVal;
       });
-      return Promise.resolve(simplifiedChineseObj);
+      return simplifiedChineseObj;
+      // return Promise.resolve(simplifiedChineseObj);
     },
-    (rejected: any) => {
-      return Promise.reject(rejected);
+    (rejected: string): string => {
+      // return Promise.reject(rejected);
+      return rejected;
     }
   );

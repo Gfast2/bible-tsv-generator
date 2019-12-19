@@ -13,7 +13,7 @@ export default (): Promise<object | string> =>
       }
       const toReturn: any = {};
       const lines = resolved.data.split('\n');
-      lines.map((e: any) => {
+      lines.map((e: string) => {
         const ele = e.split(',');
         const BookId = ele[0];
         const englishShort = ele[1];

@@ -2,7 +2,7 @@
 // const bookUrl = 'https://getbible.net/index.php?view=json&v=cns'; // 'cus' for traditional chinese!
 const bookUrl = 'https://getbible.net/index.php?view=json&v='; // 'cus' for traditional chinese!
 // const bookUrl = 'http://192.168.0.92/cns.html'; // for simulation purpose
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { BookVersion } from '../types/globals';
 
 // Parse each book's content back to humanreadable format.
@@ -36,7 +36,7 @@ const decodeAllBooks = (books: any): object => {
 
 export default async (bookVersion: BookVersion) =>
   await axios.get(encodeURI(`${bookUrl}${bookVersion}`)).then(
-    (resolved: any) => {
+    (resolved: AxiosResponse<string>) => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
         return Promise.reject('Failed to parse response books');
       }

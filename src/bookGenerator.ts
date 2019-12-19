@@ -30,7 +30,7 @@ const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion: BookVersion
 
 export default (bookVersion: BookVersion): Promise<string | undefined> =>
   zhHans()
-    .then((res: any) => {
+    .then((res: object) => {
       console.log('Got all simplified chinese book titles.');
       const bookNamePairs = res;
       return bookNamePairs;
