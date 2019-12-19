@@ -1,11 +1,22 @@
 Sprint 2019-12-9~13
 --- backlog ---
-/ Abstract not related stuff into their own module from index.js
-/ Move all source stuff into "/src" and try to use typescript code-base style as Basard suggested
-/ Convert the code base into typescript
-/ Add another option to allow user download another version of chinese bible (和合本)
 / Start considering how should write the test
+/ Clean up some useless Mock module that only for test purpose
+/ Figure out the right place for generated bible files
+/ Fix problem that the compiler mv resolved "lib/" in upper directory
+/ Fix problem of ESLint/Prettier that against each other on syntax for "switch" cases.
 
 --- todo ---
+/ Add another option to allow user download another version of chinese bible (和合本)
+  - let the gui layer got resolved result from logic jungle and do right reaction for it.
 
 --- done ---
+/ 2019-12-10: Move all source stuff into "/src" and try to use typescript code-base style as Basard suggested (c.a. 30m)
+/ 2019-12-11: Convert the code base into typescript (convert all js module into ts without es error 2h 35m)
+/ 2019-12-11: move package.json, package-lock-json, node_modules/ and some other related files out of src/ (included by the ticket above)
+/ 2019-12-12: Add another option to allow user download another version of chinese bible (和合本) (1h 45m)
+  - 15:47 - 16:02 -> figuring how many chinese bible version available from the source & define the type "BookVersion" in global.d.ts
+  - 10:30 - 12:00 -> finally figured out that's cased by the little special way how ts-node resolve definitions.
+/ 2019-12-12: Let ESLint/prettier back to work with typescript (c.a. 20m)
+/ 2019-12-13: Abstract not related stuff into their own module from index.js (index.ts only have gui stuff, logics are now abstracted into bookGenerator.ts 1h 25m)
+/ 2019-12-14: can not write parsed info into file system bug get addressed (1h 30m)

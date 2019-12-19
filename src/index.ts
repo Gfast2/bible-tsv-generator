@@ -4,7 +4,6 @@ import chalk from 'chalk';
 import ora from 'ora';
 import inquirer from 'inquirer';
 import bookGenerator from './bookGenerator';
-
 // const bookVersion: BookVersion = 'cns';
 
 // TODO: Here I add logic acutally let the user select what they would like to download
@@ -44,11 +43,11 @@ const cliMenu = (): void => {
         case 'cns':
         case 'cnt':
         case 'cus':
-        case 'cut':{
+        case 'cut': {
           let thing:any;
           try {
             thing = await bookGenerator(answers.command);
-          }catch(e) {
+          } catch (e) {
             console.log('failed because:');
             console.log(e);
           }
@@ -69,4 +68,23 @@ const main = (): void => {
   cliMenu();
 };
 
-main();
+// main();
+
+// Mock main function for file download parsing
+const tmpMain = async () => {
+  try {
+    await bookGenerator('cnt'); // resolve Promise with book name as payload
+    doneGraph();
+    console.log(
+      chalk.bold.green(
+        `All done properly!
+                  The simplified chinese bible can be found in repo root directory with name: `
+      ) + chalk.inverse.underline.yellowBright(`"${bookVersion}.tsv"`)
+    );
+  } catch (e) {
+    console.log(chalk.bold.underline.redBright('Failed to get bible'));
+  }
+  cliMenu();
+};
+
+tmpMain();

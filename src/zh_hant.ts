@@ -1,8 +1,8 @@
 // return object that contains traditional chinese book titles
 
 // Api explaination: https://bible.fhl.net/json/
-// const siteUrl = 'http://192.168.0.92/listall.html'; // Simulator purpose
-const siteUrl = 'https://bible.fhl.net/json/listall.html';
+const siteUrl = 'http://192.168.0.92/listall.html'; // Simulator purpose
+// const siteUrl = 'https://bible.fhl.net/json/listall.html';
 import axios from 'axios';
 
 export default (): Promise<object | string> =>

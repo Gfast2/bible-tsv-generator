@@ -1,0 +1,16 @@
+Sprint 2019-12-16~22
+--- backlog ---
+/ Start considering how should write the test
+/ Figure out the right place for generated bible files
+/ Fix problem that the compiler mv resolved "lib/" in upper directory
+/ Fix problem of ESLint/Prettier that against each other on syntax for "switch" cases.
+/ Add another option to allow user download another version of chinese bible (和合本)
+/ Remove useless white-space between each chinese character.
+/ Define all functions with their return type properly
+/ Remove as many defined variable with "any" as possible
+
+--- todo ---
+/ Make sure all Promise works properly
+
+--- done ---
+/ 2019-12-16: Clean up some useless Mock module that only for test purpose
