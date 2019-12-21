@@ -6,7 +6,7 @@ import chineseConv from 'chinese-conv';
 // for resolve object, for reject string
 export default (): Promise<object | string> =>
   zhHant().then(
-    (resolved: object): any => {
+    (resolved: any /*object*/) /*: object*/ => {
       const simplifiedChineseObj: any = {};
       Object.entries<object>(resolved).forEach(([key, val]) => {
         const newVal: any = {};

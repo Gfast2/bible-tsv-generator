@@ -1,10 +1,9 @@
 import { bibleGraph, doneGraph, byeGraph, helpGen } from './asciiGraph';
 import chalk from 'chalk';
-// import { BookVersion } from '../types/globals';
+import { BookVersion } from '../types/globals';
 import ora from 'ora';
 import inquirer from 'inquirer';
 import bookGenerator from './bookGenerator';
-// const bookVersion: BookVersion = 'cns';
 
 // TODO: Here I add logic acutally let the user select what they would like to download
 const cliMenu = (): void => {
@@ -72,7 +71,8 @@ const main = (): void => {
 
 // Mock main function for file download parsing
 // TODO: Figure out whick type(s) are allowed to be returned here. (ts1055)
-const tmpMain = async (): void => {
+const tmpMain = async ()/*: void*/ => {
+  const bookVersion: BookVersion = 'cns';
   try {
     await bookGenerator('cnt'); // resolve Promise with book name as payload
     doneGraph();

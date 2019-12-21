@@ -13,6 +13,7 @@ const decodeEachBook = (book: any): object => {
     Object.entries<object>(value).map(([k, v]) => {
       if (k === 'chapter') {
         Object.entries(v).map(([nam, sentenceObj]) => {
+          // TODO: Update the regex for removing whitespaces between two chinese characters
           transChapter[nam] = decodeURI(sentenceObj.verse).replace(/\r\n/, '');
         });
       }
@@ -23,8 +24,8 @@ const decodeEachBook = (book: any): object => {
 };
 
 // Parse all books' content
-const decodeAllBooks = (books: any): object => {
-  const newVersion: any = {};
+const decodeAllBooks = (books: { [s: string]: object[] }): object => {
+  const newVersion: { [s: string]: { [i: string]: string | object } } = {};
   Object.entries<object[]>(books).map(([key, object]) => {
     newVersion[key] = {};
     Object.entries(object).map(([k, o]) => {
@@ -34,7 +35,9 @@ const decodeAllBooks = (books: any): object => {
   return newVersion;
 };
 
-export default async (bookVersion: BookVersion) =>
+// TDOO: I do need here too, some way to define the return type for resolve as object, and reject for string
+// TODO: Ask Leo how to dealing with some let declaration for variable in this situation
+export default async (bookVersion: BookVersion)/*: Promise<object | string>*/ =>
   await axios.get(encodeURI(`${bookUrl}${bookVersion}`)).then(
     (resolved: AxiosResponse<string>) => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
@@ -42,6 +45,7 @@ export default async (bookVersion: BookVersion) =>
       }
       const raw = resolved.data;
       const tmp = raw.substring(1, raw.length - 2);
+      // let rawBook: { version: object } = { version: {} };
       let rawBook: any = {};
       try {
         rawBook = JSON.parse(tmp);
@@ -56,8 +60,9 @@ export default async (bookVersion: BookVersion) =>
       };
       return Promise.resolve(theBible);
     },
-    (rejected: any) => {
-      return Promise.reject(rejected);
+    (rejected: AxiosResponse<string>) => {
+      // return Promise.reject(rejected);
+      return rejected;
     }
   );
 // Whole response Body (depth=0)
