@@ -33,6 +33,8 @@ export default (): Promise<BookNameArr> =>
           enShorter: englishShorter,
           zhHantFull: chineseFull,
           zhHantShort: chineseShort,
+          zhHansFull: '',
+          zhHansShort: '',
         };
       });
       // console.log(toReturn);

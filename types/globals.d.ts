@@ -11,12 +11,15 @@ export type BookVersion =
   | 'cus' // Chinese: Union Simplified
   | 'cut'; // Chinese: Union Traditional
 
-interface BookNameObject {
+export interface BookNameObject {
+  [s: string]: string;
   enFull: string;
   enShort: string;
   enShorter: string;
   zhHantFull: string;
   zhHantShort: string;
+  zhHansFull: string;
+  zhHansShort: string;
 }
 
 export interface BookNameArr {

@@ -1,16 +1,17 @@
 // return object that return simplified chinese book titles
 import zhHant from './zh_hant';
 import chineseConv from 'chinese-conv';
+import { BookNameArr, BookNameObject } from '../types/globals';
 
 // TODO: Figure out how to define in zh_hant.ts define return type to be
 // for resolve object, for reject string
-export default (): Promise<object | string> =>
+export default (): Promise<BookNameArr> =>
   zhHant().then(
-    (resolved: any /*object*/) /*: object*/ => {
-      const simplifiedChineseObj: any = {};
-      Object.entries<object>(resolved).forEach(([key, val]) => {
-        const newVal: any = {};
-        Object.entries<any>(val).forEach(([cKey, cVal]) => {
+    (resolved: BookNameArr) => {
+      const simplifiedChineseObj: BookNameArr = {};
+      Object.entries<BookNameObject>(resolved).forEach(([key, val]) => {
+        const newVal: BookNameObject = {} as BookNameObject;
+        Object.entries<string>(val).forEach(([cKey, cVal]) => {
           if (cVal === undefined) {
             return; // protect from 'undefined' for translations function call
           } else if (cKey === 'zhHantFull') {
@@ -24,10 +25,10 @@ export default (): Promise<object | string> =>
         simplifiedChineseObj[key] = newVal;
       });
       return simplifiedChineseObj;
-      // return Promise.resolve(simplifiedChineseObj);
     },
-    (rejected: string): string => {
-      // return Promise.reject(rejected);
-      return rejected;
+    (rejected: string) => {
+      console.log('The module zh_hans.ts got a rejected Promise from module zh_hant.ts, and pass it along!');
+      console.log(`And the rejected message from zh_hant.ts is '${rejected}'`);
+      throw rejected;
     }
   );
