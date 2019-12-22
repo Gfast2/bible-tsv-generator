@@ -4,14 +4,15 @@
 // const siteUrl = 'http://192.168.0.92/listall.html'; // Simulator purpose
 const siteUrl = 'https://bible.fhl.net/json/listall.html';
 import axios, { AxiosResponse } from 'axios';
+import { BookNameArr } from '../types/globals';
 
-export default (): Promise<object | string> =>
+export default (): Promise<BookNameArr> =>
   axios.get(siteUrl).then(
     (resolved: AxiosResponse<string>) => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
         throw `Request resolved with abnormal http code ${resolved.status} while quering traditional chinese book titles`;
       }
-      const toReturn: any = {};
+      const toReturn: BookNameArr = {} as BookNameArr;
       const lines = resolved.data.split('\n').filter(e => e !== '');
       console.log(lines);
       lines.map((e: string) => {
@@ -39,6 +40,6 @@ export default (): Promise<object | string> =>
     },
     (rejected: AxiosResponse<string>) => {
       console.log('Already got rejected in zh_hant.ts when trying to fetch data.');
-      throw 'Failed while fetch traditional chinese Titles. \n' + rejected;
+      throw 'Failed while fetch traditional chinese Titles.' + '\nReason: ' + rejected;
     }
   );

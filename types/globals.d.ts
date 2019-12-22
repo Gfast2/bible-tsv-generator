@@ -10,3 +10,15 @@ export type BookVersion =
   | 'cnt' // Chinese: NCV Traditional
   | 'cus' // Chinese: Union Simplified
   | 'cut'; // Chinese: Union Traditional
+
+interface BookNameObject {
+  enFull: string;
+  enShort: string;
+  enShorter: string;
+  zhHantFull: string;
+  zhHantShort: string;
+}
+
+export interface BookNameArr {
+  [name: string]: BookNameObject;
+}
