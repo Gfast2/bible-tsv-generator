@@ -26,7 +26,11 @@ export interface BookNameArr {
   [name: string]: BookNameObject;
 }
 
-// fetchBooks.ts use these interfaces for parsing these object
+// START: fetchBooks.ts use these interfaces for parsing these object
+export interface BookSingleReturned {
+  [s: string]: { [s: string]: string };
+}
+
 export interface BookChapterVerses {
   [s: string]: string;
   verse_nr: string;
@@ -44,16 +48,15 @@ export interface BookSingleBook {
 }
 
 export interface BookContentObjectProcessed {
-  [s: string]: string | number | BookChapterObject;
+  [s: string]: string | number | BookSingleReturned;
   version: string;
   book_name: string;
   book_nr: number;
   direction: string;
-  book: BookChapterObject;
+  book: BookSingleReturned;
 }
 
 export interface BookContentObject {
-  [s: string]: string | number | BookSingleBook;
   version: string;
   book_name: string;
   book_nr: number;
@@ -65,9 +68,16 @@ export interface BookVersionBodyProcessed {
   [s: string]: BookContentObjectProcessed;
 }
 
-
 export interface BookVersionBody {
   [s: string]: BookContentObject;
+}
+
+export interface BookVersionMainProcessed {
+  [s: string]: string | BookVersionBodyProcessed;
+  type: string;
+  version_ref: string;
+  direction: string;
+  version: BookVersionBodyProcessed;
 }
 
 export interface BookVersionMain {
@@ -77,3 +87,4 @@ export interface BookVersionMain {
   direction: string;
   version: BookVersionBody;
 }
+// END: fetchBooks.ts use these interfaces for parsing these object

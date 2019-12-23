@@ -5,6 +5,7 @@ const bookUrl = 'https://getbible.net/index.php?view=json&v='; // 'cus' for trad
 import axios, { AxiosResponse } from 'axios';
 import {
   BookVersion,
+  BookVersionMainProcessed,
   BookVersionMain,
   BookVersionBody,
   BookContentObject,
@@ -13,17 +14,20 @@ import {
   BookChapterVerses,
   BookVersionBodyProcessed,
   BookContentObjectProcessed,
+  BookSingleReturned,
 } from '../types/globals';
 
 // Parse each book's content back to humanreadable format.
-const decodeEachBook = (book: BookSingleBook): BookChapterObject => {
-  const book2Return: BookChapterObject = {} as BookChapterObject;
+const decodeEachBook = (book: BookSingleBook): BookSingleReturned => {
+  const book2Return: BookSingleReturned = {} as BookSingleReturned;
   Object.entries<BookChapterObject>(book).map(([key, value]) => {
     const transChapter: BookChapterVerses = {} as BookChapterVerses;
     Object.entries<number | BookChapterVerses>(value).map(([k, v]) => {
       if (k === 'chapter') {
         Object.entries(v).map(([nam, sentenceObj]) => {
-          transChapter[nam] = decodeURI(sentenceObj.verse).replace(/\r\n\s/, ''); // TODO: Check if all "wrong" whitespace from traditional bibles get removed
+          transChapter[nam] = decodeURI(sentenceObj.verse)
+            .replace(/\r\n/, '')
+            .replace(/\s/g, ''); // found "cut" version has interesting whitespace between each chinese character
         });
       }
     });
@@ -38,29 +42,24 @@ const decodeAllBooks = (books: BookVersionBody): BookVersionBodyProcessed => {
   Object.entries<BookContentObject>(books).map(([key, object]) => {
     newVersion[key] = {} as BookContentObjectProcessed;
     Object.entries(object).map(([k, o]) => {
-      newVersion[key][k] = k === 'book' ? decodeEachBook(o as BookSingleBook) : o;
+      newVersion[key][k] = k === 'book' ? decodeEachBook(o) : o;
     });
   });
   return newVersion;
 };
 
-// TDOO: I do need here too, some way to define the return type for resolve as object, and reject for string
-// TODO: Ask Leo how to dealing with some let declaration for variable in this situation
-export default (bookVersion: BookVersion) /*: Promise<object | string>*/ =>
+export default (bookVersion: BookVersion): Promise<BookVersionMainProcessed> =>
   axios.get(encodeURI(`${bookUrl}${bookVersion}`)).then(
     (resolved: AxiosResponse<string>) => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
-        // return Promise.reject('Failed to parse response books');
         throw 'Failed to parse response books';
       }
       const raw = resolved.data;
       const tmp = raw.substring(1, raw.length - 2);
-      // let rawBook: { version: object } = { version: {} };
       let rawBook: BookVersionMain = {} as BookVersionMain;
       try {
         rawBook = JSON.parse(tmp);
       } catch (error) {
-        // return Promise.reject('Failed to convert books to json');
         throw 'Failed to convert books to json';
       }
       const { version, ...otherRawBookProperty } = rawBook;
@@ -69,11 +68,10 @@ export default (bookVersion: BookVersion) /*: Promise<object | string>*/ =>
         ...otherRawBookProperty,
         version: parsedBooks,
       };
-      return Promise.resolve(theBible);
+      return theBible;
     },
     (rejected: AxiosResponse<string>) => {
-      // return Promise.reject(rejected);
-      return rejected;
+      throw rejected;
     }
   );
 // Whole response Body (depth=0)
@@ -110,3 +108,13 @@ export default (bookVersion: BookVersion) /*: Promise<object | string>*/ =>
 //   },
 //   ...
 // }
+
+/** "BookSingleReturned"
+{
+  "1": {
+    "1":"起初， 神創造天地。"
+    ...
+  }
+  ...
+}
+ */
