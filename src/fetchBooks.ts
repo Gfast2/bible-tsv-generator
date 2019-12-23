@@ -3,18 +3,27 @@
 const bookUrl = 'https://getbible.net/index.php?view=json&v='; // 'cus' for traditional chinese!
 // const bookUrl = 'http://192.168.0.92/cns.html'; // for simulation purpose
 import axios, { AxiosResponse } from 'axios';
-import { BookVersion } from '../types/globals';
+import {
+  BookVersion,
+  BookVersionMain,
+  BookVersionBody,
+  BookContentObject,
+  BookChapterObject,
+  BookSingleBook,
+  BookChapterVerses,
+  BookVersionBodyProcessed,
+  BookContentObjectProcessed,
+} from '../types/globals';
 
 // Parse each book's content back to humanreadable format.
-const decodeEachBook = (book: any): object => {
-  const book2Return: any = {};
-  Object.entries<object[]>(book).map(([key, value]) => {
-    const transChapter: any = {};
-    Object.entries<object>(value).map(([k, v]) => {
+const decodeEachBook = (book: BookSingleBook): BookChapterObject => {
+  const book2Return: BookChapterObject = {} as BookChapterObject;
+  Object.entries<BookChapterObject>(book).map(([key, value]) => {
+    const transChapter: BookChapterVerses = {} as BookChapterVerses;
+    Object.entries<number | BookChapterVerses>(value).map(([k, v]) => {
       if (k === 'chapter') {
         Object.entries(v).map(([nam, sentenceObj]) => {
-          // TODO: Update the regex for removing whitespaces between two chinese characters
-          transChapter[nam] = decodeURI(sentenceObj.verse).replace(/\r\n/, '');
+          transChapter[nam] = decodeURI(sentenceObj.verse).replace(/\r\n\s/, ''); // TODO: Check if all "wrong" whitespace from traditional bibles get removed
         });
       }
     });
@@ -24,12 +33,12 @@ const decodeEachBook = (book: any): object => {
 };
 
 // Parse all books' content
-const decodeAllBooks = (books: { [s: string]: object[] }): object => {
-  const newVersion: { [s: string]: { [i: string]: string | object } } = {};
-  Object.entries<object[]>(books).map(([key, object]) => {
-    newVersion[key] = {};
+const decodeAllBooks = (books: BookVersionBody): BookVersionBodyProcessed => {
+  const newVersion: BookVersionBodyProcessed = {} as BookVersionBodyProcessed;
+  Object.entries<BookContentObject>(books).map(([key, object]) => {
+    newVersion[key] = {} as BookContentObjectProcessed;
     Object.entries(object).map(([k, o]) => {
-      newVersion[key][k] = k === 'book' ? decodeEachBook(o) : o;
+      newVersion[key][k] = k === 'book' ? decodeEachBook(o as BookSingleBook) : o;
     });
   });
   return newVersion;
@@ -37,20 +46,22 @@ const decodeAllBooks = (books: { [s: string]: object[] }): object => {
 
 // TDOO: I do need here too, some way to define the return type for resolve as object, and reject for string
 // TODO: Ask Leo how to dealing with some let declaration for variable in this situation
-export default async (bookVersion: BookVersion)/*: Promise<object | string>*/ =>
-  await axios.get(encodeURI(`${bookUrl}${bookVersion}`)).then(
+export default (bookVersion: BookVersion) /*: Promise<object | string>*/ =>
+  axios.get(encodeURI(`${bookUrl}${bookVersion}`)).then(
     (resolved: AxiosResponse<string>) => {
       if (resolved.status !== 200 || resolved.statusText !== 'OK') {
-        return Promise.reject('Failed to parse response books');
+        // return Promise.reject('Failed to parse response books');
+        throw 'Failed to parse response books';
       }
       const raw = resolved.data;
       const tmp = raw.substring(1, raw.length - 2);
       // let rawBook: { version: object } = { version: {} };
-      let rawBook: any = {};
+      let rawBook: BookVersionMain = {} as BookVersionMain;
       try {
         rawBook = JSON.parse(tmp);
       } catch (error) {
-        return Promise.reject('Failed to convert books to json');
+        // return Promise.reject('Failed to convert books to json');
+        throw 'Failed to convert books to json';
       }
       const { version, ...otherRawBookProperty } = rawBook;
       const parsedBooks = decodeAllBooks(version);
