@@ -26,7 +26,7 @@ const cliMenu = (): void => {
       choices: availChoices,
     })
     .then(async (answers: answersType) => {
-      console.log(answers);
+      // console.log(answers);
       switch (answers.command) {
         case 'help': {
           console.log(chalk.yellowBright(helpGen()));
@@ -45,8 +45,14 @@ const cliMenu = (): void => {
           const thing = await bookGenerator(answers.command);
           if (thing === BookGenerateResult.succeed) {
             doneGraph();
-          } else if (thing === BookGenerateResult.succeed) {
+            console.log(chalk.greenBright('All done properly!'));
+            console.log(
+              chalk.greenBright('The simplified chinese bible can be found in repo root directory with name:') +
+                chalk.inverse.underline.yellowBright(`"${answers.command}.tsv"`)
+            );
+          } else if (thing === BookGenerateResult.failed) {
             failGraph();
+            console.log(chalk.redBright('Error happened! Please retry!'));
           }
           cliMenu();
           break;
