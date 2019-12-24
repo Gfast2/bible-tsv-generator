@@ -5,10 +5,11 @@ import fetchBooks from './fetchBooks';
 import { BookVersion, BookNameArr, BookVersionBodyProcessed, BookGenerateResult } from '../types/globals';
 
 const writeTsv = async (obj: BookVersionBodyProcessed, _bookNamePairs: BookNameArr, _bookVersion: BookVersion): Promise<string> => {
+  const titleType = _bookVersion === 'cns' || _bookVersion === 'cus' ? 'simplified' : 'traditional';
   for await (const [bookId, objBody] of Object.entries<object>(obj)) {
     const nameObj = _bookNamePairs[bookId];
-    const zhFullName = nameObj['zhHansFull'];
-    const zhShortName = nameObj['zhHansShort'];
+    const zhFullName = titleType === 'simplified' ? nameObj['zhHansFull'] : nameObj['zhHantFull'];
+    const zhShortName = titleType === 'simplified' ? nameObj['zhHansShort'] : nameObj['zhHantShort'];
     console.log(chalk.bold.dim('Writing down book ') + chalk.inverse.whiteBright(zhFullName));
     for await (const [key, value] of Object.entries(objBody)) {
       if (key === 'book') {

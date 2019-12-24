@@ -1,12 +1,9 @@
 Sprint 2019-12-23~28
 --- backlog ---
 / Start considering how should write the test
-/ Figure out the right place for generated bible files
-/ Add another option to allow user download another version of chinese bible (和合本)
 / define a mode "dry run": read api from local http server port 80, and write nothing (do not use CLI GUI module?)
 
 --- todo ---
-/ Test if the cli layer actually can do its business with its under layers.
 
 --- done ---
 / 2019-12-23: Refactoring fetchbook.ts. Let its Promises works properly
@@ -14,3 +11,10 @@ Sprint 2019-12-23~28
 / 2019-12-24: Do manual test for bookGenerator.ts's default return functions
 / 2019-12-24: Let "bookGenerator.ts" return result execution result to "index.ts"
   - define enum BookGenerateResult as return type
+/ 2019-12-24: Test if the cli layer actually can do its business with its under layers.
+/ 2019-12-24: Let the GUI layer tell more about the result!
+/ 2019-12-24: For different chinese book, I should use different chinese book title accordingly
+/ 2019-12-24: Before each "神", there should always be the whitespace
+/ 2019-12-24: Add another option to allow user download another version of chinese bible (和合本)
+/ 2019-12-??: Figure out the right place for generated bible files
+  - Right now I decide to put them just on the repo's root direcotry
