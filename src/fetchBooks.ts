@@ -27,7 +27,7 @@ const decodeEachBook = (book: BookSingleBook): BookSingleReturned => {
         Object.entries(v).map(([nam, sentenceObj]) => {
           transChapter[nam] = decodeURI(sentenceObj.verse)
             .replace(/\r\n/, '')
-            .replace(/\s/g, ''); // found "cut" version has interesting whitespace between each chinese character
+            .replace(/\s/g, ''); // found "cut" and "cus" version has interesting whitespace between each chinese character
         });
       }
     });

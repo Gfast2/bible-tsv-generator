@@ -24,8 +24,8 @@ export default (): Promise<BookNameArr> =>
       return simplifiedChineseObj;
     },
     (rejected: string) => {
-      console.log('The module zh_hans.ts got a rejected Promise from module zh_hant.ts, and pass it along!');
-      console.log(`And the rejected message from zh_hant.ts is '${rejected}'`);
+      // console.log('The module zh_hans.ts got a rejected Promise from module zh_hant.ts, and pass it along!');
+      // console.log(`And the rejected message from zh_hant.ts is '${rejected}'`);
       throw rejected;
     }
   );

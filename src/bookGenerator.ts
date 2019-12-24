@@ -2,9 +2,9 @@ import chalk from 'chalk';
 import write2fs from './write2fs';
 import zhHans from './zh_hans';
 import fetchBooks from './fetchBooks';
-import { BookVersion } from '../types/globals';
+import { BookVersion, BookNameArr } from '../types/globals';
 
-const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion: BookVersion): Promise<string | undefined> => {
+const writeTsv = async (obj: any, _bookNamePairs: BookNameArr, _bookVersion: BookVersion): Promise<string | undefined> => {
   for await (const [bookId, objBody] of Object.entries<object>(obj)) {
     const nameObj = _bookNamePairs[bookId];
     const zhFullName = nameObj['zhHansFull'];
@@ -28,46 +28,21 @@ const writeTsv = async (obj: any, _bookNamePairs: any, _bookVersion: BookVersion
   }
 };
 
-export default (bookVersion: BookVersion): Promise<string | undefined> =>
-  zhHans()
-    .then((res: any/*object*/) => {
-      console.log('Got all simplified chinese book titles.');
-      const bookNamePairs = res;
-      return bookNamePairs;
-    })
-    .catch((rej: any) => {
-      console.log(chalk.bold.underline.redBright('Got rejected while fetching book titles.'));
-      console.log(rej);
-      return 'fail';
-    })
-    .then(
-      // TODO: The first Project to get name can still fail, handle it in this then()
-      async (_bookNamePairs: any): Promise<string | undefined> => {
-        let wholeBible: any = {};
-        try {
-          const bookObj = await fetchBooks(bookVersion);
-          wholeBible = bookObj.version;
-        } catch (e) {
-          console.log('Failed to fetch book content.');
-          return Promise.reject('fail');
-        }
-        console.log('Got all simplified chinese book contents.');
-        const clearExistContent = true;
-        try {
-          await write2fs('', bookVersion, clearExistContent);
-        } catch (e) {
-          console.log('Failed to clear target file.');
-          return Promise.reject('fail');
-        }
-        try {
-          await writeTsv(wholeBible, _bookNamePairs, bookVersion);
-          return Promise.resolve('succeed');
-        } catch (e) {
-          console.log('Failed to write content into target file.');
-          return Promise.reject('fail');
-        }
-      }
-    );
+export default async (bookVersion: BookVersion): Promise<string> => {
+  try {
+    const bookNamePairs = await zhHans();
+    const bookObj = await fetchBooks(bookVersion);
+    const wholeBible = bookObj.version;
+    const clearExistContent = true;
+    await write2fs('', bookVersion, clearExistContent); // Clear old contents
+    await writeTsv(wholeBible, bookNamePairs, bookVersion);
+    return 'succeed';
+  } catch (e) {
+    console.log(chalk.bold.underline.redBright('Got Problem when generating books. Error Message:\n' + e));
+    return 'fail';
+  }
+};
+
 /* 
 export default async (bookVersion: BookVersion) =>
   zhHans().then(

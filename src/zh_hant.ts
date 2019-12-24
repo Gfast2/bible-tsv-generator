@@ -1,7 +1,7 @@
 // return object that contains traditional chinese book titles
 
 // Api explaination: https://bible.fhl.net/json/
-// const siteUrl = 'http://192.168.0.92/listall.html'; // Simulator purpose
+// const siteUrl = 'http://127.0.0.1/listall.html'; // Simulator purpose
 const siteUrl = 'https://bible.fhl.net/json/listall.html';
 import axios, { AxiosResponse } from 'axios';
 import { BookNameArr } from '../types/globals';
@@ -14,7 +14,7 @@ export default (): Promise<BookNameArr> =>
       }
       const toReturn: BookNameArr = {} as BookNameArr;
       const lines = resolved.data.split('\n').filter(e => e !== '');
-      console.log(lines);
+      // console.log(lines);
       lines.map((e: string) => {
         const ele = e.split(',');
         const BookId = ele[0];
@@ -41,7 +41,7 @@ export default (): Promise<BookNameArr> =>
       return toReturn;
     },
     (rejected: AxiosResponse<string>) => {
-      console.log('Already got rejected in zh_hant.ts when trying to fetch data.');
+      // console.log('Already got rejected in zh_hant.ts when trying to fetch data.');
       throw 'Failed while fetch traditional chinese Titles.' + '\nReason: ' + rejected;
     }
   );
