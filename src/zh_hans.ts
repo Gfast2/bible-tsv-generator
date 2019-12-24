@@ -3,8 +3,6 @@ import zhHant from './zh_hant';
 import chineseConv from 'chinese-conv';
 import { BookNameArr, BookNameObject } from '../types/globals';
 
-// TODO: Figure out how to define in zh_hant.ts define return type to be
-// for resolve object, for reject string
 export default (): Promise<BookNameArr> =>
   zhHant().then(
     (resolved: BookNameArr) => {
@@ -12,15 +10,14 @@ export default (): Promise<BookNameArr> =>
       Object.entries<BookNameObject>(resolved).forEach(([key, val]) => {
         const newVal: BookNameObject = {} as BookNameObject;
         Object.entries<string>(val).forEach(([cKey, cVal]) => {
-          if (cVal === undefined) {
+          if (cVal === undefined || cKey === 'zhHansFull' || cKey === 'zhHansShort') {
             return; // protect from 'undefined' for translations function call
           } else if (cKey === 'zhHantFull') {
             newVal.zhHansFull = chineseConv.sify(cVal);
           } else if (cKey === 'zhHantShort') {
             newVal.zhHansShort = chineseConv.sify(cVal);
-          } else {
-            newVal[cKey] = cVal;
           }
+          newVal[cKey] = cVal;
         });
         simplifiedChineseObj[key] = newVal;
       });
