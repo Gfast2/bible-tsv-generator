@@ -2,9 +2,9 @@ import chalk from 'chalk';
 import write2fs from './write2fs';
 import zhHans from './zh_hans';
 import fetchBooks from './fetchBooks';
-import { BookVersion, BookNameArr } from '../types/globals';
+import { BookVersion, BookNameArr, BookVersionBodyProcessed } from '../types/globals';
 
-const writeTsv = async (obj: any, _bookNamePairs: BookNameArr, _bookVersion: BookVersion): Promise<string | undefined> => {
+const writeTsv = async (obj: BookVersionBodyProcessed, _bookNamePairs: BookNameArr, _bookVersion: BookVersion): Promise<string> => {
   for await (const [bookId, objBody] of Object.entries<object>(obj)) {
     const nameObj = _bookNamePairs[bookId];
     const zhFullName = nameObj['zhHansFull'];
@@ -16,16 +16,13 @@ const writeTsv = async (obj: any, _bookNamePairs: BookNameArr, _bookVersion: Boo
           const chapterID = k;
           for await (const [verseID, verseContent] of Object.entries(verses)) {
             const line = `${zhFullName}\t${zhShortName}\t${bookId}\t${chapterID}\t${verseID}\t${verseContent}\n`;
-            try {
-              await write2fs(line, _bookVersion);
-            } catch (error) {
-              return error;
-            }
+            await write2fs(line, _bookVersion);
           }
         }
       }
     }
   }
+  return 'succeed';
 };
 
 export default async (bookVersion: BookVersion): Promise<string> => {

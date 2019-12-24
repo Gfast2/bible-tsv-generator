@@ -62,6 +62,7 @@ export default (bookVersion: BookVersion): Promise<BookVersionMainProcessed> =>
       } catch (error) {
         throw 'Failed to convert books to json';
       }
+      // TODO: when "version" is not posted by API, it will be "undefined"
       const { version, ...otherRawBookProperty } = rawBook;
       const parsedBooks = decodeAllBooks(version);
       const theBible = {

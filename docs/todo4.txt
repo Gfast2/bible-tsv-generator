@@ -1,0 +1,17 @@
+Sprint 2019-12-23~28
+--- backlog ---
+/ Start considering how should write the test
+/ Figure out the right place for generated bible files
+/ Fix problem that the compiler mv resolved "lib/" in upper directory
+/ Fix problem of ESLint/Prettier that against each other on syntax for "switch" cases.
+/ Add another option to allow user download another version of chinese bible (和合本)
+/ Remove useless white-space between each chinese character.
+/ Define all functions with their return type properly
+/ Remove as many defined variable with "any" as possible
+
+--- todo ---
+
+--- done ---
+/ 2019-12-23: Refactoring fetchbook.ts. Let its Promises works properly
+/ 2019-12-24: Refactoring bookGenerator.ts. Let its Promises works properly
+/ 2019-12-24: Do manual test for bookGenerator.ts's default return functions

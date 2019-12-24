@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { BookVersion } from '../types/globals';
 
-export default (text: any, _bookVersion: BookVersion, clear?: boolean): Promise<string | undefined> =>
+export default (text: string, _bookVersion: BookVersion, clear?: boolean): Promise<string | undefined> =>
   new Promise((resolved, rejectd) => {
     fs.writeFile(
       `./${_bookVersion}.tsv`,
