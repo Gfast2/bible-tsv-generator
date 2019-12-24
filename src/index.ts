@@ -1,11 +1,10 @@
-import { bibleGraph, doneGraph, byeGraph, helpGen } from './asciiGraph';
+import { bibleGraph, doneGraph, failGraph, byeGraph, helpGen } from './asciiGraph';
 import chalk from 'chalk';
-import { BookVersion } from '../types/globals';
-import ora from 'ora';
+import { BookGenerateResult } from '../types/globals';
+// import ora from 'ora';
 import inquirer from 'inquirer';
 import bookGenerator from './bookGenerator';
 
-// TODO: Here I add logic acutally let the user select what they would like to download
 const cliMenu = (): void => {
   const availChoices = [
     { name: 'Chinese: NCV Simplified', value: 'cns' },
@@ -43,16 +42,13 @@ const cliMenu = (): void => {
         case 'cnt':
         case 'cus':
         case 'cut': {
-          let thing:any;
-          try {
-            thing = await bookGenerator(answers.command);
-          } catch (e) {
-            console.log('failed because:');
-            console.log(e);
+          const thing = await bookGenerator(answers.command);
+          if (thing === BookGenerateResult.succeed) {
+            doneGraph();
+          } else if (thing === BookGenerateResult.succeed) {
+            failGraph();
           }
-          console.group();
-          console.log('The thing is: ');
-          console.log(thing);
+          cliMenu();
           break;
         }
         default:
@@ -67,14 +63,15 @@ const main = (): void => {
   cliMenu();
 };
 
-// main();
+main();
 
+/*
 // Mock main function for file download parsing
 // TODO: Figure out whick type(s) are allowed to be returned here. (ts1055)
-const tmpMain = async ()/*: void*/ => {
-  const bookVersion: BookVersion = 'cns';
+const tmpMain = async () => {
+  const bookVersion: BookVersion = 'cut';
   try {
-    await bookGenerator('cnt'); // resolve Promise with book name as payload
+    await bookGenerator('cut'); // resolve Promise with book name as payload
     doneGraph();
     console.log(
       chalk.bold.green(
@@ -85,7 +82,8 @@ const tmpMain = async ()/*: void*/ => {
   } catch (e) {
     console.log(chalk.bold.underline.redBright('Failed to get bible'));
   }
-  cliMenu();
+  // cliMenu();
 };
 
-tmpMain();
+// tmpMain();
+*/
