@@ -5,7 +5,7 @@
 
 ## Intro
 
-Mining a new Simplified Chinese Version Bible (cns) for readers that would like to read bible in command line. There is a very cool [software **kjv**](https://github.com/bontibon/kjv) available to helping people access **Bible** in CLI. As a chinese I'd like to back the chinese verson for this software. So here it is!
+Mining a new Chinese Version Bible (cns/cnt/cut/cus) for readers that would like to read bible in command line. There is a very cool [software **kjv**](https://github.com/bontibon/kjv) available to helping people access **Bible** in CLI. As a chinese I'd like to back the chinese verson for this software. So here it is!
 
 ## DoD
 
@@ -21,12 +21,12 @@ git clone https://github.com/Gfast2/bible-tsv-generator.git
 npm i
 ```
 
-2. Run code to get the simplified chinese bible:
+2. Run code to fire the cli interface to select and generate chinese bible:
 ```sh
-npm start
+node lib/
 ```
 
-3. If everything worked out well, under `root` directory of this repo, the new created file `cns.tsv` is the bible to just created. Cheers, enjoy IT!
+3. If everything worked out well, under `root` directory of this repo, the new created book `*.tsv` is the bible to just created. Cheers, enjoy IT!
 
 ## License
 

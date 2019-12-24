@@ -1,6 +1,6 @@
 {
   "name": "bible-tsv-generator",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A generator script generators tsv format bibles text file.",
   "main": "./src/index.js",
   "scripts": {
