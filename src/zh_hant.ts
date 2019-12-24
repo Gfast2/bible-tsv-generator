@@ -1,8 +1,8 @@
 // return object that contains traditional chinese book titles
 
 // Api explaination: https://bible.fhl.net/json/
-// const siteUrl = 'http://127.0.0.1/listall.html'; // Simulator purpose
-const siteUrl = 'https://bible.fhl.net/json/listall.html';
+const siteUrl = 'http://127.0.0.1/listall.html'; // Simulator purpose
+// const siteUrl = 'https://bible.fhl.net/json/listall.html';
 import axios, { AxiosResponse } from 'axios';
 import { BookNameArr } from '../types/globals';
 

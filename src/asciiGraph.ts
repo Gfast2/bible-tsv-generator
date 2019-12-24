@@ -21,6 +21,20 @@ jgs  '---'
 `)
   );
 
+export const failGraph = (): void =>
+  console.log(
+    chalk.redBright.bold(`
+
+ _
+| |__  _   _  __ _
+| '_ \\| | | |/ _\` |
+| |_) | |_| | (_| |
+|_.__/ \\__,_|\\__, |
+             |___/
+
+`)
+  );
+
 export const doneGraph = (): void =>
   console.log(
     chalk.greenBright.bold(`
@@ -37,10 +51,15 @@ export const byeGraph = (): string => {
   let w = '-------------------------------------------------------\n';
   w += '                .---.             \n';
   w += '                : .; :            \n';
+  // eslint-disable-next-line quotes
   w += `                :   .'.-..-. .--. \n`;
+  // eslint-disable-next-line quotes
   w += `                : .; :: : ; : ' '_.'\n`;
+  // eslint-disable-next-line quotes
   w += `                ` + ": ___.'`._. :`.__.'\n";
+  // eslint-disable-next-line quotes
   w += `                  .-. :      \n`;
+  // eslint-disable-next-line quotes
   w += `                ` + "       `._.'       \n";
   w += '-------------------------------------------------------\n';
   return w;

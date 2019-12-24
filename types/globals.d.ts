@@ -88,3 +88,7 @@ export interface BookVersionMain {
   version: BookVersionBody;
 }
 // END: fetchBooks.ts use these interfaces for parsing these object
+export const enum BookGenerateResult {
+  succeed,
+  failed,
+}
