@@ -43,6 +43,9 @@ npm run build
 
 If everything worked out well, under repo's root directory, the new created book `*.tsv` is the one you just created. Cheers, enjoy IT!
 
+## Warning
+[The link](https://bible.fhl.net/json/listall.html) for fetch all chinese and english book names are working very unstable. And it may caused by the server side certification implementaions. Please retry if failed. I'm considering to find somewhere else to fetch these information.
+
 ## License
 
 [MIT](./LICENSE)
