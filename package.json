@@ -4,7 +4,8 @@
   "description": "A generator script generators tsv format bibles text file.",
   "main": "./src/index.js",
   "scripts": {
-    "start": "npm run build:live",
+    "start": "node lib/",
+    "dev": "npm run build:live",
     "build": "tsc -p .",
     "build:live": "nodemon --watch './**/*.ts' --exec ts-node ./src/index.ts",
     "lint": "eslint . --ext .ts,.tsx",
